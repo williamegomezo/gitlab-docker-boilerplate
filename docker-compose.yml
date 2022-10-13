@@ -1,0 +1,25 @@
+version: '3.6'
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    restart: always
+    hostname: ${GITLAB_HOST}
+    environment:
+      GITLAB_ROOT_PASSWORD: $GITLAB_ROOT_PASSWORD
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url '${EXTERNAL_URL}'
+    ports:
+      - 80:80
+      - 443:443
+      - 22:22
+    volumes:
+      - ${GITLAB_HOME}/config:/etc/gitlab
+      - ${GITLAB_HOME}/logs:/var/log/gitlab
+      - ${GITLAB_HOME}/data:/var/opt/gitlab
+    shm_size: '256m'
+  runner:
+    image: gitlab/gitlab-runner:alpine
+    restart: always
+    volumes:
+      - ${GITLAB_HOME}/config:/etc/gitlab-runner
+      - /var/run/docker.sock:/var/run/docker.sock
