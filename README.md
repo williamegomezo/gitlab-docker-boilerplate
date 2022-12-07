@@ -7,8 +7,10 @@ A docker compose configuration is provided, it requires to set the following env
 export GITLAB_HOME=/srv/gitlab
 export GITLAB_HOST=localhost
 export GITLAB_ROOT_PASSWORD=password
-export EXTERNAL_URL=http://localhost 
+export EXTERNAL_URL=http://localhost:8010 
 ```
+
+Check https://docs.gitlab.com/ee/install/docker.html#install-gitlab-using-docker-compose to change ports if you need it.
 
 Note that `localhost` can be `example.com` (whatever domain you requires). `/srv/gitlab` will be the folder in your machine where all configuration will persist even if you kill docker containers.
 
@@ -28,7 +30,7 @@ For setting up a runner that will run your pipelines, run the following command:
 docker compose exec runner gitlab-runner register --docker-privileged
 ```
 
-For host: http://gitlab (internal host in docker network)
+For host: http://gitlab:8010 (internal host in docker network)
 
 It will ask for a token, token can be obtained in the following route:
 
